@@ -33,7 +33,7 @@ public interface StockMovementRepository extends JpaRepository<StockMovement, UU
         FROM StockMovement sm
         WHERE sm.item.id = :itemId AND sm.lab.id = :labId
         """)
-    int getCurrentQuantityByLab(UUID itemId, UUID labId);
+    double getCurrentQuantityByLab(UUID itemId, UUID labId);
     
     /**
      * Retrieves stock levels for all items currently or previously held in a

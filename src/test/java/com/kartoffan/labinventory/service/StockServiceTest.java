@@ -108,7 +108,7 @@ public class StockServiceTest {
     stockService.stockIn(request);
 
     verify(stockMovementRepository).save(argThat(m -> m.getType() == MovementType.IN &&
-        m.getQuantity() == 10 &&
+        m.getQuantity() == 10.0 &&
         m.getItem().equals(item)));
   }
   
@@ -133,7 +133,7 @@ public class StockServiceTest {
     stockService.stockIn(request);
 
     verify(stockMovementRepository).save(argThat(m -> m.getSupplier().equals(supplier) &&
-        m.getQuantity() == 5));
+        m.getQuantity() == 5.0));
   }
 
   @Test
@@ -150,12 +150,12 @@ public class StockServiceTest {
     when(labService.getById(labId)).thenReturn(lab);
     when(userService.getById(userId)).thenReturn(user);
     when(stockMovementRepository.getCurrentQuantityByLab(itemId, labId))
-        .thenReturn(10);
+        .thenReturn(10.0);
 
     stockService.stockOut(request);
 
     verify(stockMovementRepository).save(argThat(m -> m.getType() == MovementType.OUT &&
-        m.getQuantity() == -3));
+        m.getQuantity() == -3.0));
   }
   
   @Test
@@ -172,7 +172,7 @@ public class StockServiceTest {
     when(labService.getById(labId)).thenReturn(lab);
     when(userService.getById(userId)).thenReturn(user);
     when(stockMovementRepository.getCurrentQuantityByLab(itemId, labId))
-        .thenReturn(5);
+        .thenReturn(5.0);
 
     assertThrows(InsufficientStockException.class,
         () -> stockService.stockOut(request));
@@ -215,7 +215,7 @@ public class StockServiceTest {
     when(labService.getById(any())).thenReturn(lab);
     when(userService.getById(userId)).thenReturn(user);
     when(stockMovementRepository.getCurrentQuantityByLab(itemId, labId))
-        .thenReturn(10);
+        .thenReturn(10.0);
 
     stockService.transferStock(request);
 
@@ -226,7 +226,7 @@ public class StockServiceTest {
   void getCurrentQuantityByLab_success() {
     when(itemService.getById(itemId)).thenReturn(item);
     when(stockMovementRepository.getCurrentQuantityByLab(itemId, labId))
-        .thenReturn(7);
+        .thenReturn(7.5);
 
     StockQuantity result =
         stockService.getCurrentQuantityByLab(itemId, labId);
